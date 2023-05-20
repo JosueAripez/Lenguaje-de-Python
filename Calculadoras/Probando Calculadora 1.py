@@ -11,14 +11,10 @@ Ventana.title("Kalkulilo")
 Ventana.iconbitmap("Calculadoras\imagenes\icono-Calculadora.ico")
 Ventana.resizable(0,0)
 Ventana.configure(background="black")
-Ventana.geometry("318x440")
-Ventana.geometry("+10+10")
+Ventana.geometry("318x460+10+10")
 Ventana.config(cursor="hand2")
 
 # --- Funciones ---
-
-def Memory():
-    print("")
 
 def Ent_Valores(tecla):
     try:
@@ -42,12 +38,11 @@ def Ent_Val_T(event):
     try:
         tecla = event.char
         Ent_Valores(tecla)
-        #Mos_Res(tecla)
     except:
         messagebox.showerror("ERROR", "VALORES NO VALIDOS")
         Ent_Win.set("")
 
-def Mos_Res(tecla):
+def Mos_Res(tecla, *args):
     try:
         resultado = eval(Ent_Win.get())
         Ent_Win.set(resultado)
@@ -55,14 +50,6 @@ def Mos_Res(tecla):
         messagebox.showerror("ERROR", "VALORES NO VALIDOS")
         Ent_Win.set("")
         
-def Entrar(event):
-    try:
-        tecla = event.char
-        Mos_Res(tecla)
-    except:
-        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
-        Ent_Win.set("")
-
 def Raiz_Cuadrada():
     try:
         resultado = math.sqrt(float(Ent_Win.get()))
@@ -74,7 +61,6 @@ def Raiz_Cuadrada():
 def Del(*args):
     inicio = 0
     final = len(Ent_Win.get())
-        
     Ent_Win.set(Ent_Win.get()[inicio:final-1])
     
 def C_Borrar(*args):
@@ -101,14 +87,36 @@ def Porciento():
     except:
         messagebox.showerror("ERROR", "VALORES NO VALIDOS")
         Ent_Win.set("")
+        
+def Mas_Menos():
+   print("")
+
+def Atajos():
+    messagebox.showinfo("Atajos", "Presione en su teclado\n C --> Borrar Todo\n D --> Borrar un Digito\n Enter --> Mostar Resultado\n Numeros y (/ * - +) --> Para Escribir\n")
+    
+def Info():
+     messagebox.showinfo("Informacio", " Creado por: Josue Aripez\n UABC - FIAD - Ing.Com.")
+     
+def Salir():
+    Ventana.destroy()
+    
     
 
 # --- Widgets --- 
 
+Barra_Menu = Menu(Ventana)
+Menu_Mas = Menu(Barra_Menu, tearoff=0)
+Menu_Mas.add_command(label="Atajos", command=lambda: Atajos())
+Menu_Mas.add_command(label="Info", command=lambda: Info())
+Menu_Mas.add_separator()
+Menu_Mas.add_command(label="Salir", command=lambda: Salir())
+Barra_Menu.add_cascade(label="...",menu=Menu_Mas)
+Ventana.config(menu=Barra_Menu)
+
 Ent_Win = StringVar()
 Win_res = Entry(Ventana, fg="black", font=("Verdana", 25), width=14, justify=RIGHT, textvariable=Ent_Win, borderwidth=2)
 Win_res.place(x=10, y=20)
-Win_res.insert(0, "@Rojapez 2023")
+Win_res.insert(0, "0")
 Btn_Mc = Button(Ventana, text="MC", width=7, height=3, background="gray26", fg="gray63")
 Btn_Mc.place(x=10, y=80)
 Btn_Mr = Button(Ventana, text="MR", width=7, height=3, background="gray26", fg="gray63")
@@ -122,7 +130,7 @@ Btn_Mmenos.place(x=250, y=80)
 
 Btn_Pi = Button(Ventana, text="π", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Pi())
 Btn_Pi.place(x=10, y=138)
-Btn_Mas_Menos = Button(Ventana, text="±", width=7, height=3, background="gray26", fg="DodgerBlue3")
+Btn_Mas_Menos = Button(Ventana, text="±", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Mas_Menos())
 Btn_Mas_Menos.place(x=70, y=138)
 Btn_Uno_x = Button(Ventana, text="1/X", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Uno_X())
 Btn_Uno_x.place(x=130, y=138)
@@ -176,9 +184,9 @@ Btn_Div.place(x=190, y=370)
 Ventana.bind("<Key>", Ent_Val_T)
 Ventana.bind("<KeyPress-d>", Del)
 Ventana.bind("<KeyPress-c>", C_Borrar)
-Ventana.bind("<KeyPress-Return>", Entrar)
+Ventana.bind("<KeyPress-Return>", Mos_Res)
 
-# --- Fin ---  https://www.youtube.com/watch?v=4ZB3ZpKQ7d8
+# --- Fin ---
 Ventana.mainloop()
 
 """                                                                                                                                                                                                                                  
