@@ -17,6 +17,9 @@ Ventana.config(cursor="hand2")
 
 # --- Funciones ---
 
+def Memory():
+    print("")
+
 def Ent_Valores(tecla):
     try:
         if tecla >= "0" and tecla <= "9" or tecla == ".":
@@ -39,26 +42,34 @@ def Ent_Val_T(event):
     try:
         tecla = event.char
         Ent_Valores(tecla)
-        Mos_Res(tecla)
+        #Mos_Res(tecla)
     except:
         messagebox.showerror("ERROR", "VALORES NO VALIDOS")
         Ent_Win.set("")
 
 def Mos_Res(tecla):
     try:
-        if tecla == "=":
-                resultado = eval(Ent_Win.get())
-                Ent_Win.set(resultado)
+        resultado = eval(Ent_Win.get())
+        Ent_Win.set(resultado)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
+        
+def Entrar(event):
+    try:
+        tecla = event.char
+        Mos_Res(tecla)
     except:
         messagebox.showerror("ERROR", "VALORES NO VALIDOS")
         Ent_Win.set("")
 
-def Entrar(*args):
-    Mos_Res()
-        
 def Raiz_Cuadrada():
-    resultado = math.sqrt(float(Ent_Win.get()))
-    Ent_Win.set(resultado)
+    try:
+        resultado = math.sqrt(float(Ent_Win.get()))
+        Ent_Win.set(resultado)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
     
 def Del(*args):
     inicio = 0
@@ -72,10 +83,30 @@ def C_Borrar(*args):
 def Teclas_M():
     print("")
 
+def Pi():
+    Win_res.insert(0, "3.1416")
+    
+def Uno_X():
+    try:
+        resultado = 1/float(Ent_Win.get())
+        Ent_Win.set(resultado)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
+    
+def Porciento():
+    try:
+        resultado = float(Ent_Win.get())/100
+        Ent_Win.set(resultado)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
+    
+
 # --- Widgets --- 
 
 Ent_Win = StringVar()
-Win_res = Entry(Ventana, fg="black", font=("Verdana", 25), width=14, justify=RIGHT, textvariable=Ent_Win)
+Win_res = Entry(Ventana, fg="black", font=("Verdana", 25), width=14, justify=RIGHT, textvariable=Ent_Win, borderwidth=2)
 Win_res.place(x=10, y=20)
 Win_res.insert(0, "@Rojapez 2023")
 Btn_Mc = Button(Ventana, text="MC", width=7, height=3, background="gray26", fg="gray63")
@@ -89,11 +120,11 @@ Btn_Mmas.place(x=190, y=80)
 Btn_Mmenos = Button(Ventana, text="M-", width=7, height=3, background="gray26", fg="gray63")
 Btn_Mmenos.place(x=250, y=80)
 
-Btn_Pi = Button(Ventana, text="π", width=7, height=3, background="gray26", fg="DodgerBlue3")
+Btn_Pi = Button(Ventana, text="π", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Pi())
 Btn_Pi.place(x=10, y=138)
 Btn_Mas_Menos = Button(Ventana, text="±", width=7, height=3, background="gray26", fg="DodgerBlue3")
 Btn_Mas_Menos.place(x=70, y=138)
-Btn_Uno_x = Button(Ventana, text="1/X", width=7, height=3, background="gray26", fg="DodgerBlue3")
+Btn_Uno_x = Button(Ventana, text="1/X", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Uno_X())
 Btn_Uno_x.place(x=130, y=138)
 Btn_C = Button(Ventana, text="C", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: C_Borrar())
 Btn_C.place(x=190, y=138)
@@ -119,7 +150,7 @@ Btn_Num6 = Button(Ventana, text="6", width=7, height=3, background="gray26", fg=
 Btn_Num6.place(x=130, y=254)
 Btn_Menos = Button(Ventana, text="-", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Ent_Valores("-"))
 Btn_Menos.place(x=190, y=254)
-Btn_Porcen = Button(Ventana, text="%", width=7, height=3, background="gray26", fg="DodgerBlue3")
+Btn_Porcen = Button(Ventana, text="%", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Porciento())
 Btn_Porcen.place(x=250, y=254)
 
 Btn_Num1 = Button(Ventana, text="1", width=7, height=3, background="gray26", fg="white", command=lambda: Ent_Valores("1"))
@@ -145,7 +176,7 @@ Btn_Div.place(x=190, y=370)
 Ventana.bind("<Key>", Ent_Val_T)
 Ventana.bind("<KeyPress-d>", Del)
 Ventana.bind("<KeyPress-c>", C_Borrar)
-Ventana.bind("<KeyPress-Return>", Mos_Res)
+Ventana.bind("<KeyPress-Return>", Entrar)
 
 # --- Fin ---  https://www.youtube.com/watch?v=4ZB3ZpKQ7d8
 Ventana.mainloop()
