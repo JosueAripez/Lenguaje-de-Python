@@ -146,7 +146,7 @@ Ventana.bind("<Key>", Ent_Val_T)
 Ventana.bind("<KeyPress-d>", Del)
 Ventana.bind("<KeyPress-c>", C_Borrar)
 Ventana.bind("<KeyPress-Return>", Mos_Res)
-
+#FFDFD
 # --- Fin ---  https://www.youtube.com/watch?v=4ZB3ZpKQ7d8
 Ventana.mainloop()
 
