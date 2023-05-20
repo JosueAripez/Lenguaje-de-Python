@@ -66,11 +66,24 @@ def Del(*args):
 def C_Borrar(*args):
     Ent_Win.set("")
     
-def Teclas_M():
-    print("")
+def Mmas():
+    resultado = eval(Ent_Win.get()) + float(Ent_Win.get())
+    Ent_Win.set(resultado)
 
-def Pi():
-    Win_res.insert(0, "3.1416")
+def Mmenos():
+    resultado = eval(Ent_Win.get()) - float(Ent_Win.get())
+    Ent_Win.set(resultado)
+    
+def Mc():
+    Ent_Win.set("")
+    
+def Mr_Ms():
+    try:
+        resultado = eval(Ent_Win.get())
+        Ent_Win.set(resultado)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
     
 def Uno_X():
     try:
@@ -91,44 +104,33 @@ def Porciento():
 def Mas_Menos():
    print("")
 
-def Atajos():
-    messagebox.showinfo("Atajos", "Presione en su teclado\n C --> Borrar Todo\n D --> Borrar un Digito\n Enter --> Mostar Resultado\n Numeros y (/ * - +) --> Para Escribir\n")
-    
-def Info():
-     messagebox.showinfo("Informacio", " Creado por: Josue Aripez\n UABC - FIAD - Ing.Com.")
-     
-def Salir():
-    Ventana.destroy()
-    
-    
-
 # --- Widgets --- 
 
 Barra_Menu = Menu(Ventana)
 Menu_Mas = Menu(Barra_Menu, tearoff=0)
-Menu_Mas.add_command(label="Atajos", command=lambda: Atajos())
-Menu_Mas.add_command(label="Info", command=lambda: Info())
+Menu_Mas.add_command(label="Atajos", command=lambda: messagebox.showinfo("Atajos", "Presione en su teclado\n C --> Borrar Todo\n D --> Borrar un Digito\n Enter --> Mostar Resultado\n Numeros y (/ * - +) --> Para Escribir\n"))
+Menu_Mas.add_command(label="Info", command=lambda: messagebox.showinfo("Informacio", " Creado por: Josue Aripez\n UABC - FIAD - Ing.Com."))
 Menu_Mas.add_separator()
-Menu_Mas.add_command(label="Salir", command=lambda: Salir())
+Menu_Mas.add_command(label="Salir", command=lambda: Ventana.destroy())
 Barra_Menu.add_cascade(label="...",menu=Menu_Mas)
 Ventana.config(menu=Barra_Menu)
 
 Ent_Win = StringVar()
 Win_res = Entry(Ventana, fg="black", font=("Verdana", 25), width=14, justify=RIGHT, textvariable=Ent_Win, borderwidth=2)
 Win_res.place(x=10, y=20)
-Win_res.insert(0, "0")
-Btn_Mc = Button(Ventana, text="MC", width=7, height=3, background="gray26", fg="gray63")
+Win_res.insert(0, "Bonvenon")
+Btn_Mc = Button(Ventana, text="MC", width=7, height=3, background="gray26", fg="gray63", command=lambda: Mc())
 Btn_Mc.place(x=10, y=80)
-Btn_Mr = Button(Ventana, text="MR", width=7, height=3, background="gray26", fg="gray63")
+Btn_Mr = Button(Ventana, text="MR", width=7, height=3, background="gray26", fg="gray63", command=lambda:Mr_Ms())
 Btn_Mr.place(x=70, y=80)
-Btn_Ms = Button(Ventana, text="MS", width=7, height=3, background="gray26", fg="gray63")
+Btn_Ms = Button(Ventana, text="MS", width=7, height=3, background="gray26", fg="gray63", command=lambda: Mr_Ms())
 Btn_Ms.place(x=130, y=80)
-Btn_Mmas = Button(Ventana, text="M+", width=7, height=3, background="gray26", fg="gray63")
+Btn_Mmas = Button(Ventana, text="M+", width=7, height=3, background="gray26", fg="gray63", command=lambda: Mmas())
 Btn_Mmas.place(x=190, y=80)
-Btn_Mmenos = Button(Ventana, text="M-", width=7, height=3, background="gray26", fg="gray63")
+Btn_Mmenos = Button(Ventana, text="M-", width=7, height=3, background="gray26", fg="gray63", command=lambda: Mmenos())
 Btn_Mmenos.place(x=250, y=80)
 
-Btn_Pi = Button(Ventana, text="π", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Pi())
+Btn_Pi = Button(Ventana, text="π", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Win_res.insert(0, "3.1416"))
 Btn_Pi.place(x=10, y=138)
 Btn_Mas_Menos = Button(Ventana, text="±", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Mas_Menos())
 Btn_Mas_Menos.place(x=70, y=138)
