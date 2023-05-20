@@ -13,57 +13,64 @@ Ventana.resizable(0,0)
 Ventana.configure(background="black")
 Ventana.geometry("318x440")
 Ventana.geometry("+10+10")
-Ventana.config(cursor="plus")
+Ventana.config(cursor="hand2")
 
 # --- Funciones ---
 
 def Ent_Valores(tecla):
-    if tecla >= "0" and tecla <= "9" or tecla == ".":
-        Ent_Win.set(Ent_Win.get() + tecla)
-    if tecla == "*" or tecla == "/" or tecla == "+" or tecla == "-":
-        if tecla == "*":
-            Ent_Win.set(Ent_Win.get() + "*")
-        elif tecla == "/":
-            Ent_Win.set(Ent_Win.get() + "/")
-        elif tecla == "+":
-            Ent_Win.set(Ent_Win.get() + "+")
-        elif tecla == "-":
-            Ent_Win.set(Ent_Win.get() + "-")
-    if tecla == "=":
-        resultado = eval(Ent_Win.get())
-        Ent_Win.set(resultado)
+    try:
+        if tecla >= "0" and tecla <= "9" or tecla == ".":
+            Ent_Win.set(Ent_Win.get() + tecla)
+            
+        if tecla == "*" or tecla == "/" or tecla == "+" or tecla == "-":
+            if tecla == "*":
+                Ent_Win.set(Ent_Win.get() + "*")
+            elif tecla == "/":
+                Ent_Win.set(Ent_Win.get() + "/")
+            elif tecla == "+":
+                Ent_Win.set(Ent_Win.get() + "+")
+            elif tecla == "-":
+                Ent_Win.set(Ent_Win.get() + "-")
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
         
 def Ent_Val_T(event):
-    tecla = event.char
-    
-    if tecla >= "0" and tecla <= "9" or tecla == ".":
-        Ent_Win.set(Ent_Win.get() + tecla)
-    if tecla == "*" or tecla == "/" or tecla == "+" or tecla == "-":
-        if tecla == "*":
-            Ent_Win.set(Ent_Win.get() + "*")
-        elif tecla == "/":
-            Ent_Win.set(Ent_Win.get() + "/")
-        elif tecla == "+":
-            Ent_Win.set(Ent_Win.get() + "+")
-        elif tecla == "-":
-            Ent_Win.set(Ent_Win.get() + "-")
-    if tecla == "=":
-        resultado = eval(Ent_Win.get())
-        Ent_Win.set(resultado)
+    try:
+        tecla = event.char
+        Ent_Valores(tecla)
+        Mos_Res(tecla)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
+
+def Mos_Res(tecla):
+    try:
+        if tecla == "=":
+                resultado = eval(Ent_Win.get())
+                Ent_Win.set(resultado)
+    except:
+        messagebox.showerror("ERROR", "VALORES NO VALIDOS")
+        Ent_Win.set("")
+
+def Entrar(*args):
+    Mos_Res()
         
 def Raiz_Cuadrada():
-    Ent_Win.set("")
     resultado = math.sqrt(float(Ent_Win.get()))
     Ent_Win.set(resultado)
     
 def Del(*args):
     inicio = 0
     final = len(Ent_Win.get())
-    
+        
     Ent_Win.set(Ent_Win.get()[inicio:final-1])
     
 def C_Borrar(*args):
     Ent_Win.set("")
+    
+def Teclas_M():
+    print("")
 
 # --- Widgets --- 
 
@@ -123,7 +130,7 @@ Btn_Num3 = Button(Ventana, text="3", width=7, height=3, background="gray26", fg=
 Btn_Num3.place(x=130, y=312)
 Btn_Mul = Button(Ventana, text="×", width=7, height=3, background="gray26", fg="DodgerBlue3", command=lambda: Ent_Valores("*"))
 Btn_Mul.place(x=190, y=312)
-Btn_Igual = Button(Ventana, text="=", width=7, height=7, background="DodgerBlue3", fg="white", command=lambda: Ent_Valores("="))
+Btn_Igual = Button(Ventana, text="=", width=7, height=7, background="DodgerBlue3", fg="white", command=lambda: Mos_Res("="))
 Btn_Igual.place(x=250, y=312)
 
 Btn_Num0 = Button(Ventana, text="0", width=15, height=3, background="gray26", fg="white", command=lambda: Ent_Valores("0"))
@@ -136,10 +143,11 @@ Btn_Div.place(x=190, y=370)
 # --- Extras ---
 
 Ventana.bind("<Key>", Ent_Val_T)
-Ventana.bind("<KeyPress-b>", Del)
+Ventana.bind("<KeyPress-d>", Del)
 Ventana.bind("<KeyPress-c>", C_Borrar)
+Ventana.bind("<KeyPress-Return>", Mos_Res)
 
-# --- Fin ---
+# --- Fin ---  https://www.youtube.com/watch?v=4ZB3ZpKQ7d8
 Ventana.mainloop()
 
 """                                                                                                                                                                                                                                  
